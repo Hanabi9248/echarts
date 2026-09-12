@@ -23,4 +23,4 @@ jobs:
           git switch --detach FETCH_HEAD
           git cherry-pick 948e400b3dba57d2503836f3832cc6ad9663f3ed c556fee642ba948e4e0e564f8e9f6468cb627f00
           test "$(git rev-parse HEAD^{tree})" = fd571dbd843673f7b67fe2889f5391163b3cfa17
-          git push --force-with-lease=refs/heads/codex/literal-template-values:c556fee642ba948e4e0e564f8e9f6468cb627f00 origin HEAD:refs/heads/codex/literal-template-values
+          git push --force-with-lease=refs/heads/codex/literal-template-values:a36061b561bd5b92cb69293d0cb5911663624da0 origin HEAD:refs/heads/codex/literal-template-values
