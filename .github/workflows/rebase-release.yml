@@ -1,0 +1,26 @@
+name: Retarget formatter fix to release
+on:
+  push:
+    branches: [codex/retarget-format-release]
+permissions:
+  contents: write
+jobs:
+  retarget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: c556fee642ba948e4e0e564f8e9f6468cb627f00
+          fetch-depth: 3
+      - name: Preserve the tested patch on the requested release branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name Hanabi
+          git config user.email 317387557+Hanabi9248@users.noreply.github.com
+          git fetch --no-tags --depth=1 https://github.com/apache/echarts.git release
+          test "$(git rev-parse FETCH_HEAD)" = cd9de600d64c072cd0580559b86542528b5c646f
+          git switch --detach FETCH_HEAD
+          git cherry-pick 948e400b3dba57d2503836f3832cc6ad9663f3ed c556fee642ba948e4e0e564f8e9f6468cb627f00
+          test "$(git rev-parse HEAD^{tree})" = fd571dbd843673f7b67fe2889f5391163b3cfa17
+          git push --force-with-lease=refs/heads/codex/literal-template-values:c556fee642ba948e4e0e564f8e9f6468cb627f00 origin HEAD:refs/heads/codex/literal-template-values
